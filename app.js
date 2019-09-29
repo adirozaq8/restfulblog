@@ -6,7 +6,9 @@ app = express(),
 mongoose = require('mongoose');
 
 // APP CONFIG
-mongoose.connect('mongodb://localhost:27017/restful_blog_app', {useNewUrlParser: true});
+var url = process.env.DATABASEURL || 'mongodb://localhost:27017/restful_blog_app';
+
+mongoose.connect(url, {useNewUrlParser: true});
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -115,7 +117,7 @@ app.delete('/blogs/:id', function(req, res){
   })
 })
 
-var PORT = 3000;
-app.listen(PORT, function(){
+var PORT = process.env.PORT || 8080;
+app.listen(PORT, process.env.IP, function(){
   console.log("SERVER STARTED!");
 });
